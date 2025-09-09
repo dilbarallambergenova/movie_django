@@ -1,0 +1,14 @@
+from django.urls import path
+from .views import (
+               language_list_api_view,
+               genre_list_api_view,
+               country_list_api_view,
+               movie_list_api_view,
+                  )
+urlpatterns=[
+    path('language_api',language_list_api_view,name='language_list'),
+    path('genre_api',genre_list_api_view,name='genre_list'),
+    path('country_api',country_list_api_view,name='country_list'),
+    path('movie_api',movie_list_api_view,name='movie_list')
+
+]
