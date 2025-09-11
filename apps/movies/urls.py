@@ -5,7 +5,7 @@ from django.urls import path
 #                country_list_api_view,
 #                movie_list_api_view,
 #                   )
-from apps.movies.api_endpoints.movie import MovieDetail,MovieAudioDetail
+from apps.movies.api_endpoints.movie import MovieDetail,MovieAudioDetail,MovieSubtitleDetail
 from apps.movies.api_endpoints import genre
 
 urlpatterns=[
@@ -15,6 +15,7 @@ urlpatterns=[
     # path('movie_api',movie_list_api_view,name='movie_list'),
     path('<int:pk>/',MovieDetail.MovieDetailView.as_view(),name='movie_detail'),
     path('<int:pk>/audios',MovieAudioDetail.MovieAudioDetailView.as_view(),name='movieaudio_detail'),
+    path('<int:pk>/subtitles',MovieSubtitleDetail.MovieSubtitleDetailView.as_view(),name='moviesubtitle_detail'),
     path('genres/', genre.GenreListView.as_view(), name='genres_list'),
 
 
