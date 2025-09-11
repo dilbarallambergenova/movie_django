@@ -1,2 +1,2 @@
 # movie_django
-created kino web page
+A movie website was created using Django Rest Framework
