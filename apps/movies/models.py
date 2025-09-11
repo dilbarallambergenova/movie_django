@@ -1,66 +1,67 @@
 from django.db import models
 from apps.common.models import BaseModel
 
+
+class Genre(BaseModel):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Language(BaseModel):
-    name=models.CharField(max_length=50)
+    name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.name
 
 class Country(BaseModel):
-    name=models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-   
-
-class Genre(BaseModel):
-    name=models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
 
 class Movie(BaseModel):
-    movie_genre=models.ManyToManyField('Genre',related_name='movies')
-    title=models.CharField(max_length=100)
-    country=models.ForeignKey(Country, on_delete=models.PROTECT)
-    description=models.PositiveSmallIntegerField(default=0)
-    age_restriction=models.DateField()
-    year=models.IntegerField()
+    title = models.CharField(max_length=255)
+    country = models.ForeignKey(Country, on_delete=models.PROTECT)
+    description = models.TextField(blank=True, null=True)
+    age_restriction = models.PositiveSmallIntegerField(default=0)
+    release_year = models.DateField(null=True,blank=True)
+    genres = models.ManyToManyField("Genre", related_name="movies")
 
     def __str__(self):
         return self.title
 
 
 class MovieAudio(BaseModel):
-    language=models.ForeignKey(Language,on_delete=models.PROTECT)
-    name=models.CharField(max_length=100)
-    movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    language = models.ForeignKey(Language, on_delete=models.PROTECT)
+    name = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.name
-    
+        return f"{self.movie.title} ({self.language} audio)"
+
+
 class MovieSubtitle(BaseModel):
-    language=models.ForeignKey(Language,on_delete=models.PROTECT)
-    movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    language = models.ForeignKey(Language, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.movie.name
-     
+        return f"{self.movie.title} ({self.language} subtitle)"
 
-class MovieFile(BaseModel):
-    language=models.ForeignKey(Language,on_delete=models.PROTECT)
-    movie=models.ForeignKey(Movie,on_delete=models.PROTECT)
-    file=models.FileField(upload_to='movies/files')
-
-    def __str__(self):
-        return self.movie.name
 
 class PosterImage(BaseModel):
-    movie=models.ForeignKey(Movie,on_delete=models.PROTECT)
-    language=models.ForeignKey(Language,on_delete=models.PROTECT)
-    image=models.ImageField(upload_to='movies/image')
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    language = models.ForeignKey(Language, on_delete=models.PROTECT)
+    image = models.ImageField(upload_to="movies/posters/")
 
     def __str__(self):
-        return self.movie.name
-    
+        return f"Poster for {self.movie.title} ({self.language})"
+
+
+class MovieFile(BaseModel):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    language = models.ForeignKey(Language, on_delete=models.PROTECT)
+    file = models.FileField(upload_to="movies/videos")
+
+    def __str__(self):
+        return f"File: {self.movie.title} ({self.language})"
