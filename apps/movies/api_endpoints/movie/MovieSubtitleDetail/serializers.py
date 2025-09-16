@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from apps.movies.models import MovieSubtitle
 from apps.movies.api_endpoints.language import LanguageMiniSerializer
 
