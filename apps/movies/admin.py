@@ -1,6 +1,6 @@
 from django.contrib import admin
 from apps.movies.models import( Movie, Language,Genre,Country,MovieSubtitle,MovieAudio,
-                               MovieFile,PosterImage,MovieAudio,WatchSession)
+                               MovieFile,PosterImage,MovieAudio)
 
 
 admin.site.register(Movie)
