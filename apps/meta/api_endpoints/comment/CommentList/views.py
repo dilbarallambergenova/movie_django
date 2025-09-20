@@ -6,6 +6,6 @@ from apps.meta.api_endpoints.comment.CommentList.serializers import CommentListS
 
 @api_view(['GET'])
 def CommentListView(request,pk):
-    comments=get_object_or_404(Comment,id=pk)
+    comments=Comment.objects.filter(movie_id=pk)
     serializer=CommentListSerializer(comments,many=True)
     return Response(serializer.data)
