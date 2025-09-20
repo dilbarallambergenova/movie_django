@@ -7,5 +7,5 @@ urlpatterns = [
          watchsession.WatchSessionCreateView.as_view(),
          name='watch_session_create'),
     path('comment-create/',comment.CommentCreateView.as_view(),name='comment-create'),
-    path('comment-list/',CommentListView,name='comment')
+    path('comment-list/<int:pk>',CommentListView,name='comment')
 ]
